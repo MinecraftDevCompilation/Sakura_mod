@@ -1,17 +1,17 @@
 package cn.mcmod.sakura.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import cn.mcmod.sakura.block.entity.ChoppingBoardBlockEntity;
 import cn.mcmod.sakura.block.machines.ChoppingBoardBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 public class ChoppingBoardRender implements BlockEntityRenderer<ChoppingBoardBlockEntity> {
@@ -38,9 +38,9 @@ public class ChoppingBoardRender implements BlockEntityRenderer<ChoppingBoardBlo
                 renderItemLayingDown(poseStack, direction);
             }
 
-            Minecraft.getInstance().getItemRenderer().renderStatic(boardStack, ItemTransforms.TransformType.FIXED,
-                    combinedLight, combinedOverlay, poseStack, buffer, posLong);
-            poseStack.popPose();
+			Minecraft.getInstance().getItemRenderer().renderStatic(boardStack, ItemDisplayContext.FIXED, combinedLight,
+					combinedOverlay, poseStack, buffer, blockEntity.getLevel(), posLong);
+			poseStack.popPose();
         }
     }
 
@@ -50,10 +50,10 @@ public class ChoppingBoardRender implements BlockEntityRenderer<ChoppingBoardBlo
 
         // Rotate item to face the cutting board's front side
         float f = -direction.toYRot();
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(f));
+        matrixStackIn.mulPose(Axis.YP.rotationDegrees(f));
 
         // Rotate item flat on the cutting board. Use X and Y from now on
-        matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+        matrixStackIn.mulPose(Axis.XP.rotationDegrees(90.0F));
 
         // Resize the item
         matrixStackIn.scale(0.6F, 0.6F, 0.6F);
@@ -65,7 +65,7 @@ public class ChoppingBoardRender implements BlockEntityRenderer<ChoppingBoardBlo
 
         // Rotate block to face the cutting board's front side
         float f = -direction.toYRot();
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(f));
+        matrixStackIn.mulPose(Axis.YP.rotationDegrees(f));
 
         // Resize the block
         matrixStackIn.scale(0.8F, 0.8F, 0.8F);

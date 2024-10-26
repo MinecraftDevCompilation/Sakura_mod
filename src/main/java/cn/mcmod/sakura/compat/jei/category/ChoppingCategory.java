@@ -22,7 +22,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -36,7 +35,7 @@ public class ChoppingCategory implements IRecipeCategory<ChoppingRecipe> {
 
     private final IDrawable chancedSlot;
     public ChoppingCategory(IGuiHelper helper) {
-        title = new TranslatableComponent("sakura.jei.chopping");
+        title = Component.translatable("sakura.jei.chopping");
         ResourceLocation backgroundImage = new ResourceLocation(SakuraMod.MODID, "textures/gui/jei_chopping.png");
         background = helper.createDrawable(backgroundImage, 4, 4, 92, 74);
         chancedSlot = helper.createDrawable(backgroundImage, 100, 0, 18, 18);

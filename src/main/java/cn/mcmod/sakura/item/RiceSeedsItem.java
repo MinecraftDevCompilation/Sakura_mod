@@ -3,7 +3,7 @@ package cn.mcmod.sakura.item;
 import cn.mcmod.sakura.SakuraMod;
 import cn.mcmod.sakura.block.BlockRegistry;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -28,7 +28,7 @@ public class RiceSeedsItem extends ItemNameBlockItem {
             if (player != null && context.getClickedFace().equals(Direction.UP)
                     && (targetState.is(BlockTags.DIRT) || targetState.getBlock() instanceof FarmBlock)) {
                 player.displayClientMessage(
-                        new TranslatableComponent(SakuraMod.MODID + "." + "block.rice.invalid_placement"), true);
+                        Component.translatable(SakuraMod.MODID + "." + "block.rice.invalid_placement"), true);
             }
         }
         return !result.consumesAction() && this.isEdible()

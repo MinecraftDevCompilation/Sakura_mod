@@ -1,28 +1,27 @@
 package cn.mcmod.sakura.block;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 
 @SuppressWarnings("deprecation")
 public class BambooBlock extends RotatedPillarBlock {
 
     public BambooBlock() {
-        super(Properties.of(Material.BAMBOO,
-                state -> (state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? MaterialColor.SAND
-                        : MaterialColor.PLANT))
+        super(Properties.of().mapColor((p_152624_) -> {
+            return p_152624_.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? MapColor.SAND : MapColor.PLANT;
+        }).instrument(NoteBlockInstrument.BASS)
                 .strength(2.0F).sound(SoundType.BAMBOO).randomTicks());
     }
 
     @Override
-    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource rand) {
         super.randomTick(state, worldIn, pos, rand);
         if (worldIn.isDay()) {
             if (worldIn.canSeeSky(pos) || worldIn.getBlockState(pos.above()).is(this)

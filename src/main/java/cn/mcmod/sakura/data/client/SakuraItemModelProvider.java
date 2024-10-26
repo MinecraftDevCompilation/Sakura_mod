@@ -36,12 +36,6 @@ public class SakuraItemModelProvider extends AbstractItemModelProvider {
             
         });
 
-//        FoodRegistry.ITEMS.getEntries().forEach((item)->{
-//            normalItem(item);
-//        });
-//        ItemRegistry.ITEMS.getEntries().forEach((item)->{
-//            normalItem(item);
-//        });
     }
 
 }

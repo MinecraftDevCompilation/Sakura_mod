@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import cn.mcmod_mmf.mmlib.fluid.FluidIngredient;
 import cn.mcmod_mmf.mmlib.recipe.AbstractRecipe;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -64,7 +65,7 @@ public class CookingPotRecipe extends AbstractRecipe {
     }
 
     @Override
-    public ItemStack assemble(RecipeWrapper inv) {
+    public ItemStack assemble(RecipeWrapper inv, RegistryAccess pRegistryAccess) {
         return this.output.copy();
     }
 
@@ -74,7 +75,7 @@ public class CookingPotRecipe extends AbstractRecipe {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return this.output;
     }
 

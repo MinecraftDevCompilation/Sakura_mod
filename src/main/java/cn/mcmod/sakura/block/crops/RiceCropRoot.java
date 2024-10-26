@@ -1,7 +1,5 @@
 package cn.mcmod.sakura.block.crops;
 
-import java.util.Random;
-
 import javax.annotation.Nullable;
 
 import cn.mcmod.sakura.block.BlockRegistry;
@@ -11,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -68,7 +67,7 @@ public class RiceCropRoot extends BushBlock implements BonemealableBlock, Liquid
 
     @SuppressWarnings("deprecation")
     @Override
-    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource rand) {
         super.randomTick(state, worldIn, pos, rand);
         if (!worldIn.isAreaLoaded(pos, 1)) {
             return;
@@ -103,7 +102,7 @@ public class RiceCropRoot extends BushBlock implements BonemealableBlock, Liquid
     }
 
     @Override
-    public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         BlockState upperState = worldIn.getBlockState(pos.above());
         if (upperState.is(BlockRegistry.RICE_CROP.get())) {
             return !((RiceCrop) upperState.getBlock()).isMaxAge(upperState);
@@ -112,12 +111,12 @@ public class RiceCropRoot extends BushBlock implements BonemealableBlock, Liquid
     }
 
     @Override
-    public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level worldIn, RandomSource rand, BlockPos pos, BlockState state) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel worldIn, RandomSource rand, BlockPos pos, BlockState state) {
         int ageGrowth = Math.min(this.getAge(state) + this.getBonemealAgeIncrease(worldIn), 15);
         if (ageGrowth <= this.getMaxAge()) {
             worldIn.setBlockAndUpdate(pos, state.setValue(AGE, ageGrowth));

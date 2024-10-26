@@ -1,7 +1,5 @@
 package cn.mcmod.sakura.block.foods;
 
-import java.util.Random;
-
 import cn.mcmod.sakura.SakuraMod;
 import cn.mcmod.sakura.block.BlockRegistry;
 import cn.mcmod_mmf.mmlib.block.entity.HeatableBlockEntity;
@@ -9,10 +7,11 @@ import cn.mcmod_mmf.mmlib.item.info.FoodInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -51,7 +50,7 @@ public class NabeBlock extends Block implements HeatableBlockEntity{
     }
     
     @Override
-    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random rand) {
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rand) {
         if(state.getValue(IS_COOKED)) return;
         if(this.isHeated(level, pos) && rand.nextInt(10) == 0) {
             level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1F, 0.8F);
@@ -60,7 +59,7 @@ public class NabeBlock extends Block implements HeatableBlockEntity{
     }
     
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, Random rand) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
         if(state.getValue(IS_COOKED)) return;
         if(this.isHeated(level, pos) && rand.nextInt(4) == 0) {
             double x = (double) pos.getX() + 0.5D + (rand.nextDouble() * 0.6D - 0.3D);
@@ -106,7 +105,7 @@ public class NabeBlock extends Block implements HeatableBlockEntity{
 
     protected InteractionResult eat(LevelAccessor level, BlockPos pos, BlockState state, Player player) {
         if (!state.getValue(IS_COOKED)) {
-            player.displayClientMessage(new TranslatableComponent(SakuraMod.MODID + ".block.nabe.not_cooked"), true);
+            player.displayClientMessage(Component.translatable(SakuraMod.MODID + ".block.nabe.not_cooked"), true);
             return InteractionResult.FAIL;
         }else if (!player.canEat(false)) {
             return InteractionResult.PASS;

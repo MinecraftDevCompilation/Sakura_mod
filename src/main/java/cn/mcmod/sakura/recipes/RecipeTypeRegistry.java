@@ -2,7 +2,6 @@ package cn.mcmod.sakura.recipes;
 
 import cn.mcmod.sakura.SakuraMod;
 import cn.mcmod_mmf.mmlib.recipe.AbstractRecipeSerializer;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -13,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class RecipeTypeRegistry {
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister
-            .create(Registry.RECIPE_TYPE_REGISTRY, SakuraMod.MODID);
+            .create(ForgeRegistries.RECIPE_TYPES, SakuraMod.MODID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister
             .create(ForgeRegistries.RECIPE_SERIALIZERS, SakuraMod.MODID);
 

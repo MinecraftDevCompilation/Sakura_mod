@@ -9,7 +9,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ContainerRegistry {
     public static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister
-            .create(ForgeRegistries.CONTAINERS, SakuraMod.MODID);
+            .create(ForgeRegistries.MENU_TYPES, SakuraMod.MODID);
 
     public static final RegistryObject<MenuType<StoneMortarContainer>> STONE_MORTAR = CONTAINER_TYPES
             .register("stone_mortar", () -> IForgeMenuType.create(StoneMortarContainer::new));

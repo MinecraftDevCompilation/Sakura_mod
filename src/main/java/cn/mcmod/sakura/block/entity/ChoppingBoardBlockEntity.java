@@ -14,7 +14,7 @@ import cn.mcmod_mmf.mmlib.utils.LevelUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -32,7 +32,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
@@ -127,14 +126,14 @@ public class ChoppingBoardBlockEntity extends SyncedBlockEntity {
                 .getRecipesFor(RecipeTypeRegistry.CHOPPING_RECIPE_TYPE.get(), recipeWrapper, level);
         if (recipeList.isEmpty()) {
             if (player != null)
-                player.displayClientMessage(new TranslatableComponent("sakura.block.chopping_board.invalid_item"), true);
+                player.displayClientMessage(Component.translatable("sakura.block.chopping_board.invalid_item"), true);
             return Optional.empty();
         }
         Optional<ChoppingRecipe> recipe = recipeList.stream()
                 .filter(cuttingRecipe -> cuttingRecipe.getTool().test(toolStack)).findFirst();
         if (!recipe.isPresent()) {
             if (player != null)
-                player.displayClientMessage(new TranslatableComponent("sakura.block.chopping_board.invalid_tool"), true);
+                player.displayClientMessage(Component.translatable("sakura.block.chopping_board.invalid_tool"), true);
             return Optional.empty();
         }
         lastRecipeID = recipe.get().getId();
@@ -169,7 +168,7 @@ public class ChoppingBoardBlockEntity extends SyncedBlockEntity {
     }
     
     public boolean setResult(ChoppingRecipe recipe) {
-        ItemStack resultItem = recipe.getResultItem();
+        ItemStack resultItem = recipe.getResultItem(null);
         if (!resultItem.isEmpty()) {
             if(resultItem.getCount() > 1) {
                 for(int i=1;i < resultItem.getCount(); i++) {

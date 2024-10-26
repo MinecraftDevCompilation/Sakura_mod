@@ -2,7 +2,7 @@ package cn.mcmod.sakura.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import cn.mcmod.sakura.SakuraMod;
 import cn.mcmod.sakura.block.BlockRegistry;
@@ -58,7 +58,7 @@ public class StoneMortarRenderer implements BlockEntityRenderer<StoneMortarBlock
         if (blockstate.getBlock() instanceof StoneMortarBlock) {
             poseStack.pushPose();
             poseStack.translate(0.5D, 1.5D, 0.5D);
-            poseStack.mulPose(Vector3f.XP.rotationDegrees(180));
+            poseStack.mulPose(Axis.XP.rotationDegrees(180));
             top.setRotation(0F, ((float) (Math.PI * tileEntity.getRotation()) / 180.0F), 0F);
             ResourceLocation TEXTURE = new ResourceLocation(SakuraMod.MODID, "textures/entity/tileentity/mortar.png");
             this.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entitySolid(TEXTURE)), combinedLight,

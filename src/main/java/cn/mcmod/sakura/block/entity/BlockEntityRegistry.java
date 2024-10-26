@@ -9,7 +9,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class BlockEntityRegistry {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister
-            .create(ForgeRegistries.BLOCK_ENTITIES, SakuraMod.MODID);
+            .create(ForgeRegistries.BLOCK_ENTITY_TYPES, SakuraMod.MODID);
 
     public static final RegistryObject<BlockEntityType<StoneMortarBlockEntity>> STONE_MORTAR = BLOCK_ENTITIES
             .register("stone_mortar", () -> BlockEntityType.Builder

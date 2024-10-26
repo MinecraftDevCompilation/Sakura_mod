@@ -31,7 +31,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -53,7 +52,7 @@ public class CookingPotBlock extends BaseEntityBlock {
             Block.box(0.0D, -1.0D, 0.0D, 16.0D, 0.0D, 16.0D));
 
     public CookingPotBlock() {
-        super(Properties.of(Material.METAL).strength(0.5F, 5.0F).sound(SoundType.LANTERN));
+        super(Properties.of().strength(0.5F, 5.0F).sound(SoundType.LANTERN));
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH)
                 .setValue(TRAY_SUPPORT, false).setValue(OPEN, false));
     }
@@ -108,8 +107,8 @@ public class CookingPotBlock extends BaseEntityBlock {
         if (heldStack.isEmpty() && player.isShiftKeyDown()) {
             level.setBlockAndUpdate(pos, state.setValue(OPEN, state.getValue(OPEN) ? false : true));
             level.playSound(null, pos, SoundEvents.WOOD_PLACE, SoundSource.BLOCKS, 0.7F, 1.0F);
-        } else if (!level.isClientSide) {
-            NetworkHooks.openGui((ServerPlayer) player, cookingPot, pos);
+        } else if (!level.isClientSide()) {
+        	NetworkHooks.openScreen((ServerPlayer) player, cookingPot, pos);
         }
         return InteractionResult.SUCCESS;
     }

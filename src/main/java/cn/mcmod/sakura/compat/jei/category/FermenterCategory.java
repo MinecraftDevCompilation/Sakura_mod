@@ -20,7 +20,6 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -36,7 +35,7 @@ public class FermenterCategory implements IRecipeCategory<FermenterRecipe> {
     private final IDrawable icon;
 
     public FermenterCategory(IGuiHelper helper) {
-        title = new TranslatableComponent("sakura.jei.fermenting");
+        title = Component.translatable("sakura.jei.fermenting");
         ResourceLocation backgroundImage = new ResourceLocation(SakuraMod.MODID, "textures/gui/barrel.png");
         background = helper.createDrawable(backgroundImage, 32, 10, 110, 66);
         icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.FERMENTER.get()));

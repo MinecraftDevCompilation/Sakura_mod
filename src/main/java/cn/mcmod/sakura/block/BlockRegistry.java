@@ -30,8 +30,7 @@ import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -107,11 +106,11 @@ public class BlockRegistry {
     public static final RegistryObject<Block> BAMBOOSHOOT = BLOCKS.register("bamboo_shoot", BambooShoot::new);
 
     public static final RegistryObject<Block> SAKURA_PLANK = BLOCKS.register("plank_sakura",
-            () -> plank(MaterialColor.WOOD));
+            () -> plank(MapColor.WOOD));
     public static final RegistryObject<Block> MAPLE_PLANK = BLOCKS.register("plank_maple",
-            () -> plank(MaterialColor.SAND));
+            () -> plank(MapColor.SAND));
     public static final RegistryObject<Block> BAMBOO_PLANK = BLOCKS.register("plank_bamboo",
-            () -> plank(MaterialColor.SAND));
+            () -> plank(MapColor.SAND));
     
     public static final RegistryObject<Block> STRAW_BLOCK = BLOCKS.register("straw_block",
             () -> new Block(Block.Properties.copy(Blocks.HAY_BLOCK)));
@@ -183,7 +182,7 @@ public class BlockRegistry {
     public static final RegistryObject<Block> NABE_ODEN = BLOCKS.register("nabe_oden", 
             ()->new NabeBlock(FoodInfo.builder().amountAndCalories(12, 1f).build()));
     
-    private static RotatedPillarBlock log(MaterialColor top, MaterialColor bark) {
+    private static RotatedPillarBlock log(MapColor top, MapColor bark) {
         return new RotatedPillarBlock(BlockBehaviour.Properties
                 .of(Material.WOOD, state -> (state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? top : bark))
                 .strength(2.0F).sound(SoundType.WOOD));
@@ -194,14 +193,14 @@ public class BlockRegistry {
                 .instabreak().sound(SoundType.GRASS));
     }
 
-    private static RotatedPillarBlock simplebambooBlock(MaterialColor top, MaterialColor bark) {
+    private static RotatedPillarBlock simplebambooBlock(MapColor top, MapColor bark) {
         return new RotatedPillarBlock(BlockBehaviour.Properties
                 .of(Material.BAMBOO,
                         state -> (state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? top : bark))
                 .strength(2.0F).sound(SoundType.BAMBOO));
     }
 
-    private static Block plank(MaterialColor material_color) {
+    private static Block plank(MapColor material_color) {
         return new Block(
                 BlockBehaviour.Properties.of(Material.WOOD, material_color).strength(2.0F, 3.0F).sound(SoundType.WOOD));
     }

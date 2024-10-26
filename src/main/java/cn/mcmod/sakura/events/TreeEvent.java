@@ -6,7 +6,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.event.world.BlockEvent.BlockToolModificationEvent;
+import net.minecraftforge.event.level.BlockEvent.BlockToolModificationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -28,7 +28,7 @@ public class TreeEvent {
     private static void stripLog(BlockToolModificationEvent event, Block log, Block stripped_log) {
         BlockState origin = event.getState();
         if (origin.is(log)) {
-            event.getWorld().playSound(event.getPlayer(), event.getPos(), SoundEvents.AXE_STRIP, SoundSource.BLOCKS,
+            event.getLevel().playSound(event.getPlayer(), event.getPos(), SoundEvents.AXE_STRIP, SoundSource.BLOCKS,
                     1.0F, 1.0F);
             event.setFinalState(stripped_log.withPropertiesOf(origin));
         }

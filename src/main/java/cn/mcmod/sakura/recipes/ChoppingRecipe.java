@@ -1,7 +1,6 @@
 package cn.mcmod.sakura.recipes;
 
 import java.util.List;
-import java.util.Random;
 
 import com.google.common.collect.Lists;
 import com.google.gson.annotations.Expose;
@@ -10,6 +9,8 @@ import com.google.gson.annotations.SerializedName;
 import cn.mcmod_mmf.mmlib.recipe.AbstractRecipe;
 import cn.mcmod_mmf.mmlib.recipe.ChanceResult;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -57,7 +58,7 @@ public class ChoppingRecipe extends AbstractRecipe {
     }
     
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return this.output;
     }
     
@@ -65,7 +66,7 @@ public class ChoppingRecipe extends AbstractRecipe {
         return this.extraOutput;
     }
     
-    public List<ItemStack> rollByproducts(Random rand, int fortuneLevel) {
+    public List<ItemStack> rollByproducts(RandomSource rand, int fortuneLevel) {
         List<ItemStack> results = Lists.newArrayList();
         NonNullList<ChanceResult> rollableResults = getByproducts();
         for (ChanceResult output : rollableResults) {
@@ -77,7 +78,7 @@ public class ChoppingRecipe extends AbstractRecipe {
     }
 
     @Override
-    public ItemStack assemble(RecipeWrapper inv) {
+    public ItemStack assemble(RecipeWrapper pContainer, RegistryAccess pRegistryAccess) {
         return this.output;
     }
 
@@ -95,5 +96,5 @@ public class ChoppingRecipe extends AbstractRecipe {
     public RecipeType<?> getType() {
         return RecipeTypeRegistry.CHOPPING_RECIPE_TYPE.get();
     }
-    
+
 }

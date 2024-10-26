@@ -41,10 +41,10 @@ public class StoneMortarBlock extends BaseEntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn,
             BlockHitResult result) {
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             BlockEntity tileEntity = world.getBlockEntity(pos);
             if (tileEntity instanceof StoneMortarBlockEntity blockEntity) {
-                NetworkHooks.openGui((ServerPlayer) player, blockEntity, pos);
+            	NetworkHooks.openScreen((ServerPlayer) player, blockEntity, pos);
             }
         }
         return InteractionResult.SUCCESS;

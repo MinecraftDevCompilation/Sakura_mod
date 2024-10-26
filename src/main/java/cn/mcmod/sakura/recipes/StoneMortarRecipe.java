@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import cn.mcmod_mmf.mmlib.recipe.AbstractRecipe;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -53,7 +54,7 @@ public class StoneMortarRecipe extends AbstractRecipe {
     }
 
     @Override
-    public ItemStack assemble(RecipeWrapper inv) {
+    public ItemStack assemble(RecipeWrapper inv, RegistryAccess pRegistryAccess) {
         return this.output.get(0).copy();
     }
 
@@ -63,7 +64,7 @@ public class StoneMortarRecipe extends AbstractRecipe {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return this.output.get(0);
     }
 

@@ -1,5 +1,7 @@
 package cn.mcmod.sakura.data.loot;
 
+import java.util.Set;
+
 import cn.mcmod.sakura.block.BambooPlant;
 import cn.mcmod.sakura.block.BlockItemRegistry;
 import cn.mcmod.sakura.block.BlockRegistry;
@@ -24,7 +26,12 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
 public class SakuraBlockLoot extends AbstartctBlockLoot {
 
-    @Override
+    protected SakuraBlockLoot(Set<Item> pExplosionResistant) {
+		super(pExplosionResistant);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
     public void addTables() {
         dropSelf(BlockRegistry.BAMBOO_BLOCK.get());
         BlockRegistry.BLOCKS.getEntries().forEach(block -> {

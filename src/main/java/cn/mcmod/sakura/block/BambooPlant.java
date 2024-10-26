@@ -1,11 +1,10 @@
 package cn.mcmod.sakura.block;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -68,7 +67,7 @@ public class BambooPlant extends Block implements BonemealableBlock {
     }
 
     @Override
-    public void tick(BlockState p_48896_, ServerLevel p_48897_, BlockPos p_48898_, Random p_48899_) {
+    public void tick(BlockState p_48896_, ServerLevel p_48897_, BlockPos p_48898_, RandomSource p_48899_) {
         if (!p_48896_.canSurvive(p_48897_, p_48898_)) {
             p_48897_.destroyBlock(p_48898_, true);
         }
@@ -81,7 +80,7 @@ public class BambooPlant extends Block implements BonemealableBlock {
     }
 
     @Override
-    public void randomTick(BlockState state, ServerLevel levelIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel levelIn, BlockPos pos, RandomSource random) {
         if(ForgeHooks.onCropsGrowPre(levelIn, pos, state, random.nextInt(3) == 0)) {
             if (levelIn.getRawBrightness(pos.above(), 0) >= 6) {
                 growingTick(state, levelIn, pos, random); 
@@ -91,7 +90,7 @@ public class BambooPlant extends Block implements BonemealableBlock {
         }
     }
 
-    public void spreadingTick(ServerLevel levelIn, BlockPos pos, Random random) {
+    public void spreadingTick(ServerLevel levelIn, BlockPos pos, RandomSource random) {
         int j = this.getHeightAboveUpToMax(levelIn, pos) + 1;
         if(j >= 16) {
             if (levelIn.isRaining() || random.nextFloat() < 0.15) {
@@ -100,7 +99,7 @@ public class BambooPlant extends Block implements BonemealableBlock {
         }
     }
 
-    public void growingTick(BlockState state, ServerLevel levelIn, BlockPos pos, Random random) {
+    public void growingTick(BlockState state, ServerLevel levelIn, BlockPos pos, RandomSource random) {
         int i = this.getHeightBelowUpToMax(levelIn, pos) + 1;
         if(i < 16 && levelIn.isEmptyBlock(pos.above())) {
                 this.growBamboo(state, levelIn, pos, random, i);
@@ -124,18 +123,18 @@ public class BambooPlant extends Block implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(BlockGetter p_48886_, BlockPos p_48887_, BlockState p_48888_,
+    public boolean isValidBonemealTarget(LevelReader p_48886_, BlockPos p_48887_, BlockState p_48888_,
             boolean p_48889_) {
         return true;
     }
 
     @Override
-    public boolean isBonemealSuccess(Level p_48891_, Random p_48892_, BlockPos p_48893_, BlockState p_48894_) {
+    public boolean isBonemealSuccess(Level p_48891_, RandomSource p_48892_, BlockPos p_48893_, BlockState p_48894_) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel p_48876_, Random p_48877_, BlockPos p_48878_, BlockState p_48879_) {
+    public void performBonemeal(ServerLevel p_48876_, RandomSource p_48877_, BlockPos p_48878_, BlockState p_48879_) {
         int i = this.getHeightAboveUpToMax(p_48876_, p_48878_);
         int j = this.getHeightBelowUpToMax(p_48876_, p_48878_);
         int k = i + j + 1;
@@ -163,7 +162,7 @@ public class BambooPlant extends Block implements BonemealableBlock {
                 : super.getDestroyProgress(p_48901_, p_48902_, p_48903_, p_48904_);
     }
 
-    public void growBamboo(BlockState p_48911_, Level level, BlockPos pos, Random p_48914_, int p_48915_) {
+    public void growBamboo(BlockState p_48911_, Level level, BlockPos pos, RandomSource p_48914_, int p_48915_) {
         BlockState blockstate = level.getBlockState(pos.below());
         BlockPos blockpos = pos.below(2);
         BlockState blockstate1 = level.getBlockState(blockpos);
@@ -183,7 +182,7 @@ public class BambooPlant extends Block implements BonemealableBlock {
         level.setBlock(pos.above(), this.defaultBlockState().setValue(LEAVES, bambooleaves), 3);
     }
 
-    public void growBambooShoot(ServerLevel levelIn, BlockPos pos, Random random) {
+    public void growBambooShoot(ServerLevel levelIn, BlockPos pos, RandomSource random) {
         BlockPos blockpos1 = pos.offset(random.nextInt(3) - 1, random.nextInt(2) - random.nextInt(2),
                 random.nextInt(3) - 1);
         if (BlockRegistry.BAMBOOSHOOT.get().defaultBlockState().canSurvive(levelIn, blockpos1)

@@ -124,7 +124,7 @@ public class StoneMortarBlockEntity extends SyncedBlockEntity implements MenuPro
     protected boolean canWork(StoneMortarRecipe recipe) {
         if (hasInput()) {
             boolean check_extra = false;
-            ItemStack resultStack = recipe.getResultItem();
+            ItemStack resultStack = recipe.getResultItem(null);
 
             if (resultStack.isEmpty()) {
                 return false;
@@ -132,7 +132,7 @@ public class StoneMortarBlockEntity extends SyncedBlockEntity implements MenuPro
                 ItemStack outStack = inventory.getStackInSlot(4);
                 if (outStack.isEmpty()) {
                     check_extra = true;
-                } else if (!outStack.sameItem(resultStack)) {
+                } else if (!ItemStack.isSameItem(outStack, resultStack)) {
                     return false;
                 } else {
                     check_extra = outStack.getCount() + resultStack.getCount() <= resultStack.getMaxStackSize();
@@ -146,7 +146,7 @@ public class StoneMortarBlockEntity extends SyncedBlockEntity implements MenuPro
                     ItemStack extraStack = inventory.getStackInSlot(5);
                     if (extraStack.isEmpty()) {
                         return true;
-                    } else if (!extraStack.sameItem(resultExtraStack)) {
+                    } else if (!ItemStack.isSameItem(extraStack, resultExtraStack)) {
                         return false;
                     } else {
                         return extraStack.getCount() + resultExtraStack.getCount() <= resultExtraStack
@@ -174,7 +174,7 @@ public class StoneMortarBlockEntity extends SyncedBlockEntity implements MenuPro
 
         recipeTime = 0;
 
-        ItemStack resultStack = recipe.getResultItem();
+        ItemStack resultStack = recipe.getResultItem(null);
         ItemStack outStack = inventory.getStackInSlot(4);
         ItemStack extraStack = inventory.getStackInSlot(5);
         ItemStack resultExtraStack = recipe.getResultItemList().size() > 1 ? recipe.getResultItemList().get(1)
@@ -196,11 +196,11 @@ public class StoneMortarBlockEntity extends SyncedBlockEntity implements MenuPro
 
         for (int i = 0; i < 4; ++i) {
             ItemStack slotStack = inventory.getStackInSlot(i);
-            if (slotStack.hasContainerItem()) {
+            if (slotStack.hasCraftingRemainingItem()) {
                 double x = worldPosition.getX() + 0.5;
                 double y = worldPosition.getY() + 0.7;
                 double z = worldPosition.getZ() + 0.5;
-                LevelUtils.spawnItemEntity(level, inventory.getStackInSlot(i).getContainerItem(), x, y, z, 0F, 0.25F,
+                LevelUtils.spawnItemEntity(level, inventory.getStackInSlot(i).getCraftingRemainingItem(), x, y, z, 0F, 0.25F,
                         0F);
             }
             if (!slotStack.isEmpty()) {
@@ -218,7 +218,7 @@ public class StoneMortarBlockEntity extends SyncedBlockEntity implements MenuPro
     }
 
     public void clearUsedRecipes(Player player) {
-        grantStoredRecipeExperience(player.level, player.position());
+        grantStoredRecipeExperience(player.level(), player.position());
         experienceTracker.clear();
     }
 
@@ -348,7 +348,7 @@ public class StoneMortarBlockEntity extends SyncedBlockEntity implements MenuPro
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.sakura.stone_mortar");
+        return Component.translatable("container.sakura.stone_mortar");
     }
 
     @OnlyIn(Dist.CLIENT)
