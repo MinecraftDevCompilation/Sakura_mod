@@ -13,10 +13,18 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
 public class SeedsDrop {
 	public static class SeedDropModifier extends LootModifier {
+		public static final Supplier<MapCodec<SilkTouchTestModifier>> CODEC = Suppliers.memoize(() ->
+            		RecordCodecBuilder.mapCodec(inst ->
+                		codecStart(inst)
+                		.apply(inst, SeedDropModifier::new)
+            		)
+        	);
+		
 		protected SeedDropModifier(LootItemCondition[] conditionsIn) {
 			super(conditionsIn);
 		}
@@ -31,19 +39,13 @@ public class SeedsDrop {
 			generatedLoot.add(new ItemStack(seeds.get((int) (Math.random() * seeds.size()))));
 			return generatedLoot;
 		}
-	}
-
-	public static class Serializer extends GlobalLootModifierSerializer<SeedDropModifier> {
-		@Override
-		public SeedDropModifier read(ResourceLocation location, JsonObject object,
-				LootItemCondition[] ailootcondition) {
-			return new SeedDropModifier(ailootcondition);
-		}
 
 		@Override
-		public JsonObject write(SeedDropModifier instance) {
-			return new JsonObject();
-		}
+        	public MapCodec<? extends IGlobalLootModifier> codec() {
+            		return CODEC.get();
+        	}
 	}
+
+
 
 }
